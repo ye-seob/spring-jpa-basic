@@ -7,8 +7,8 @@ import javax.persistence.Persistence;
 
 public class JpaMain {
     public static void main(String[] args) {
-       // EntityManagerFactory는 애플리케이션 로딩 시점에 딱 하나만 생성돼야 함
-       EntityManagerFactory  emf = Persistence.createEntityManagerFactory("hello");
+        // EntityManagerFactory는 애플리케이션 로딩 시점에 딱 하나만 생성돼야 함
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
 
         EntityManager em = emf.createEntityManager();
 
@@ -19,19 +19,19 @@ public class JpaMain {
 
         //트랜잭션을 trycatch문으로 감싸는 것이 좋음
         try {
-            Member member = new Member();
+            Member findMember = em.find(Member.class, 1L);
 
-            member.setId(1L);
-            member.setName("John");
 
-            em.persist(member);
+            System.out.println("findMember: " + findMember.getId());
+            System.out.println("findMember: " + findMember.getName());
 
             // 트랜잭션 커밋
             // 커밋은 실제 DB에 변경 사항을 반영하는 작업
             tx.commit();
         } catch (Exception e) {
+            e.printStackTrace();
             tx.rollback();
-        }finally {
+        } finally {
             em.close();
         }
 
