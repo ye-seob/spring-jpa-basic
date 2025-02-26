@@ -23,14 +23,19 @@ public class JpaMain {
 
         //트랜잭션을 trycatch문으로 감싸는 것이 좋음
         try {
-//            Member findMember = em.find(Member.class, 1L);
-//            findMember.setName("Jack");
 
-            List<Member> result = em.createQuery("select m from Member as m", Member.class).getResultList();
+            // 비영속 상태
+            Member member = new Member();
+            member.setId(100L);
+            member.setName("helloJPA");
 
-            for (Member m : result) {
-                System.out.println(m.getName());
-            }
+            // 영속 상태
+            em.persist(member);
+
+            Member findMember = em.find(Member.class, member.getId());
+
+            System.out.println(findMember.getId());
+            System.out.println(findMember.getName());
 
             // em.persist(findMember); 안 해도 됨
             // JPA를 통해 엔티티를 가져오면 관리해주기 때문에
