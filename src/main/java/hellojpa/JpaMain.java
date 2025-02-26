@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import java.sql.SQLOutput;
 import java.util.List;
 
 public class JpaMain {
@@ -24,23 +25,10 @@ public class JpaMain {
         //트랜잭션을 trycatch문으로 감싸는 것이 좋음
         try {
 
-            // 비영속 상태
-            Member member = new Member();
-            member.setId(100L);
-            member.setName("helloJPA");
+            Member findMember1 = em.find(Member.class, 100L);
+            Member findMember2 = em.find(Member.class, 100L);
 
-            // 영속 상태
-            em.persist(member);
-
-            Member findMember = em.find(Member.class, member.getId());
-
-            System.out.println(findMember.getId());
-            System.out.println(findMember.getName());
-
-            // em.persist(findMember); 안 해도 됨
-            // JPA를 통해 엔티티를 가져오면 관리해주기 때문에
-            // 변경사항이 생기면 알아서 update 쿼리를 날려줌
-
+            System.out.println(findMember1 == findMember2);
 
             // 트랜잭션 커밋
             // 커밋은 실제 DB에 변경 사항을 반영하는 작업
