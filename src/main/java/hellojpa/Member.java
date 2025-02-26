@@ -11,6 +11,14 @@ public class Member {
     // 만약 데베에는 USER로 저장돼있다면 @Column(name = "username")로 하면 됨
     private String name;
 
+    public Member() {
+    }
+
+    public Member(long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
 
     public long getId() {
         return id;

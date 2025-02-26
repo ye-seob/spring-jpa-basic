@@ -24,11 +24,14 @@ public class JpaMain {
 
         //트랜잭션을 trycatch문으로 감싸는 것이 좋음
         try {
+            Member member1 = new Member(10L, "예섭");
+            Member member2 = new Member(11L, "예섭3");
 
-            Member findMember1 = em.find(Member.class, 100L);
-            Member findMember2 = em.find(Member.class, 100L);
-
-            System.out.println(findMember1 == findMember2);
+            em.persist(member1);
+            em.persist(member2);
+            //이 선 위에서 쿼리가 날라가지 않음
+            // 영속성 저장만으로는 SQL쿼리 X
+            System.out.println("=========");
 
             // 트랜잭션 커밋
             // 커밋은 실제 DB에 변경 사항을 반영하는 작업
